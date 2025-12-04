@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Neha!</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .font-header {
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .font-script {
+            font-family: 'Pacifico', cursive;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Shake Animation for the gift */
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(0eg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .gift-box:hover {
+            animation: shake 0.5s infinite;
+            cursor: pointer;
+        }
+
+        /* Cake Candle Flickering */
+        @keyframes flicker {
+            0% { opacity: 0.8; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.2); }
+            100% { opacity: 0.8; transform: scaleY(1); }
+        }
+        
+        .candle-flame {
+            animation: flicker 0.1s infinite alternate;
+            transform-origin: center bottom;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+    <!-- WELCOME SCREEN (Gift Box) -->
+    <div id="welcome-screen" class="text-center transition-all duration-700">
+        <h2 class="text-white text-3xl mb-8 font-script animate-pulse">A surprise for Neha...</h2>
+        
+        <div class="relative group cursor-pointer" onclick="openGift()">
+            <!-- Gift Box Icon (SVG construction using font awesome) -->
+            <div class="gift-box text-9xl text-yellow-400 drop-shadow-2xl transition-transform transform">
+                <i class="fas fa-gift"></i>
+            </div>
+            <p class="text-white mt-4 text-lg font-semibold animate-bounce">Tap to Open!</p>
+        </div>
+    </div>
+
+    <!-- MAIN BIRTHDAY CARD (Hidden initially) -->
+    <div id="main-content" class="hidden w-full max-w-md transform transition-all duration-1000 scale-95 opacity-0">
+        
+        <div class="glass-card rounded-3xl shadow-2xl overflow-hidden relative">
+            
+            <!-- Decorative Header Image Area -->
+            <div class="h-40 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 flex items-center justify-center relative">
+                <!-- Floating Balloons -->
+                <div class="absolute top-4 left-4 text-4xl animate-float" style="animation-delay: 0s;">🎈</div>
+                <div class="absolute bottom-4 right-4 text-3xl animate-float" style="animation-delay: 1s;">✨</div>
+                <div class="absolute top-2 right-10 text-4xl animate-float" style="animation-delay: 0.5s;">🎉</div>
+                
+                <h1 class="text-5xl text-white font-header drop-shadow-lg text-center leading-tight">
+                    Happy<br>Birthday!
+                </h1>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-8 text-center bg-white">
+                
+                <h2 class="text-4xl text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 font-header mb-2">
+                   Neha
+                </h2>
+                
+                <!-- Cake Illustration -->
+                <div class="my-6 relative inline-block">
+                    <div class="text-8xl text-pink-400 drop-shadow-md">
+                        <i class="fas fa-birthday-cake"></i>
+                    </div>
+                    <!-- Animated Flame -->
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -mt-2 text-yellow-400 text-2xl candle-flame">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                </div>
+
+                <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                    Here's to another year of being awesome! Wishing you joy, success, and all the cake you can eat. Have a fantastic day, Neha!
+                </p>
+
+                <!-- Interactive Buttons -->
+                <div class="space-y-3">
+                    <button onclick="blastConfetti()" class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                        <i class="fas fa-party-horn"></i> Blast Confetti
+                    </button>
+                    
+                    <button onclick="copyWishes()" id="copyBtn" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-full transition flex items-center justify-center gap-2">
+                        <i class="far fa-copy"></i> Copy Wish
+                    </button>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="bg-gray-50 p-4 text-center text-gray-400 text-xs">
+                Made with <i class="fas fa-heart text-red-400"></i> for Neha
+            </div>
+        </div>
+
+        <!-- Audio Player (Hidden visually, triggered by JS if you had a file) 
+             Note: Browsers block auto-play, so we keep this visual-focused. 
+        -->
+    </div>
+
+    <script>
+        // Function to handle opening the gift
+        function openGift() {
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const mainContent = document.getElementById('main-content');
+            
+            // Fade out welcome screen
+            welcomeScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                mainContent.classList.remove('hidden');
+                
+                // Small delay to allow display:block to apply before opacity transition
+                setTimeout(() => {
+                    mainContent.classList.remove('scale-95', 'opacity-0');
+                    mainContent.classList.add('scale-100', 'opacity-100');
+                    
+                    // Trigger initial celebration
+                    fireworks();
+                }, 50);
+            }, 500);
+        }
+
+        // Confetti Configuration
+        function blastConfetti() {
+            const count = 200;
+            const defaults = {
+                origin: { y: 0.7 }
+            };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+        }
+
+        // Automatic fireworks sequence
+        function fireworks() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                // since particles fall down, start a bit higher than random
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        // Copy functionality
+        function copyWishes() {
+            const text = "Happy Birthday Aditya! Wishing you a day filled with happiness and a year filled with joy.";
+            
+            // Create temporary textarea
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                const btn = document.getElementById('copyBtn');
+                const originalText = btn.innerHTML;
+                
+                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                btn.classList.add('bg-green-100', 'text-green-700');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-green-100', 'text-green-700');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+            
+            document.body.removeChild(textarea);
+        }
+    </script>
+</body>
+</html>
